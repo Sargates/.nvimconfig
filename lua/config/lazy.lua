@@ -19,69 +19,24 @@ vim.opt.rtp:prepend(lazypath)
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+-- vim.g.maplocalleader = "\\"
+
+
 
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
         -- Git related plugins
-        'tpope/vim-fugitive',
-        'tpope/vim-rhubarb',
+        "tpope/vim-fugitive",
+        "tpope/vim-rhubarb",
 
         -- Detect tabstop and shiftwidth automatically
-        'tpope/vim-sleuth',
+        "tpope/vim-sleuth",
 
         -- import your plugins	
         { import = "plugins" },
 
-        'tpope/vim-surround',
-
-        {
-            "kelly-lin/ranger.nvim",
-            config = function()
-            require("ranger-nvim").setup({ replace_netrw = true })
-            vim.api.nvim_set_keymap("n", "<leader>ef", "", {
-              noremap = true,
-              callback = function()
-                require("ranger-nvim").open(true)
-              end,
-            })
-            end,
-        },
-
-        {
-            "folke/which-key.nvim",
-            event = "VeryLazy",
-            opts = {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            },
-            keys = {
-                {
-                    "<leader>?",
-                    function()
-                        require("which-key").show({ global = false })
-                    end,
-                    desc = "Buffer Local Keymaps (which-key)",
-                },
-            },
-        },
-
-
-        -- 'SidOfc/carbon.nvim',
-
-
-        -- { 'numToStr/Comment.nvim', opts = {} },
-
-        
-
-        { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = {}},
-        { 'nvim-lua/plenary.nvim' },
-        { 'nvim-treesitter/nvim-treesitter' },
-        -- { 'nvim-telescope/telescope.nvim', tag = '0.1.8', dependencies = { 'nvim-lua/plenary.nvim' } },
-        { 'numToStr/Comment.nvim', opts = {} },
-        -- { 'BurntSushi/ripgrep', opts={} }
+        "tpope/vim-surround",
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
