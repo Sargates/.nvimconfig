@@ -1,5 +1,12 @@
 # Things to do for setup
 - [ ] Proper git integration
-- [ ] LSP
+- [ ] Migrate all individual plugins in `lua/config/lazy.lua` to individual files, `folke.lua`, `tpope.lua` etc.
+- [x] LSP
 - [ ] nvim config through SSH
     - Look into this
+- [ ] `:help ins-completion`
+    - The whole chapter
+- [ ] Learn about autocmds
+    - https://youtu.be/HL7b63Hrc8U?t=946
+- [ ] `:help object-motions`
+    - Vim motion

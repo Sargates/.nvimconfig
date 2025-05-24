@@ -1,0 +1,12 @@
+- `ciw`
+    - I remember seeing something that "iw" is a text object
+    - `c` does something specific -> `i` would normally enter insert mode, but it doesn't here...
+- To view a key sequence mapping,
+    - For default mappings, use `:h {bind}`
+    - For custom mappings, use `:map {bind}?`
+- Select parentheses-, brace-, or bracket-wrapped string
+    - Enter visual mode on openning/closing character, (`(`, `{`, `[`) <!-- comment to fix parenteheses matching -- ) -->
+    - Use `%` to move cursor to matching character.
+    - Full sequence is `v%d` to delete entire 
+- `gg=G` to reindent entire
+    - https://github.com/neovim/neovim/discussions/28722#discussioncomment-9407637
