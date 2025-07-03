@@ -10,7 +10,7 @@ return {
                 return
             end
             url_open.setup ({
-                open_app = "wslview",
+                open_app = os.getenv("ISWSL") and "wslview" or "xdg-open",
                 open_only_when_cursor_on_url = true,
                 highlight_url = {
                     all_urls = {
