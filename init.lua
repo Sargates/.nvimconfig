@@ -1,7 +1,3 @@
--- vim.g.bettercomments_language_aliases = { zsh = "sh" }
--- vim.g.bettercomments_included = { "zsh" }
-
-
 require("config.lazy")
 
 -- Make line numbers default
@@ -18,6 +14,8 @@ vim.opt.expandtab = true
 
 require("config.binds")
 
+-- Required for zsh treesitter support
+vim.treesitter.language.register("bash", "zsh")
 
 -- require("vscode-multi-cursor").setup({
 --     default_mappings = true,
@@ -41,6 +39,16 @@ vim.diagnostic.config({
     -- virtual_text = true,
     virtual_lines = true,
 })
+
+-- From TJ's tree-sitter video - https://www.youtube.com/watch?v=MpnjYb-t12A
+vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = '',
+    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
+
 
 -- -- Vim-Plug
 -- vim.cmd([[
