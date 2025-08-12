@@ -1,12 +1,16 @@
 
 -- Telescope binds
+    local telescope = require("telescope")
     local builtin = require("telescope.builtin")
 
-    -- local telescope = require("telescope")
     vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-    vim.keymap.set("n", "<space>fd", function() builtin.find_files { find_command = { "rg", "--files", "--iglob", "!.git", "--hidden" } } end, { desc = "Telescope find all files" }) -- https://github.com/creativenull/dotfiles/blob/4fc5971029604ff1c338cfe0c6c2c333d9ee3ec4/.config/nvim-nightly/lua/creativenull/plugins/config/telescope.lua#L17
+    vim.keymap.set("n", "<space>fd", function() telescope.extensions.frecency.frecency { workspace = "CWD", } end, { desc = "Telescope find all files" })
+    -- vim.keymap.set("n", "<space>fd", function() builtin.find_files { find_command = { "rg", "--files", "--hidden", "--iglob", "!.git" } } end, { desc = "Telescope find all files" }) -- https://github.com/creativenull/dotfiles/blob/4fc5971029604ff1c338cfe0c6c2c333d9ee3ec4/.config/nvim-nightly/lua/creativenull/plugins/config/telescope.lua#L17
     vim.keymap.set("n", "<leader>fg", function ()
         require("telescope.builtin").live_grep {
+            additional_args = {
+                "-i"
+            },
             glob_pattern = "!.git"
         }
     end, { desc = "Telescope live grep" })
