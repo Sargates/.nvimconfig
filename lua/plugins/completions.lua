@@ -2,7 +2,7 @@ return {
   "saghen/blink.cmp",
 
   -- optional: provides snippets for the snippet source
-  dependencies = { "rafamadriz/friendly-snippets" },
+  -- dependencies = { "rafamadriz/friendly-snippets" },
 
   -- use a release tag to download pre-built binaries
   version = "1.*",
@@ -39,6 +39,7 @@ return {
 
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
+    enabled = function() return not vim.tbl_contains({ "txt", "markdown" }, vim.bo.filetype) end,
     sources = {
       default = { "lazydev", "lsp", "path", "snippets", "buffer" },
       providers = {
