@@ -66,6 +66,31 @@
     })
 
 
+-- This is for expanding ENV vars within command mode
+-- I don't even know if this works correctly or not
+
+    -- vim.cmd('cmap <S-Tab> <C-f>dvF$"=<C-r>"<CR>pdd:q<CR>:<C-r>"')
+    -- "This monstrosity" -> https://www.reddit.com/r/neovim/comments/msdtuh/comment/guwdlnd/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+    vim.cmd([[
+fun! s:ExpandCmdline()
+  let line = getcmdline()
+  let pos = getcmdpos() - 1
+
+  let res = match(strpart(line, 0, pos), '\v\$\w+$')
+  if res == -1
+    return line
+  endif
+
+  let left = strpart(line, 0, res) . expand(strpart(line, res, pos-res))
+  call setcmdpos(strlen(left) + 1)
+  return left . strpart(line, pos)
+endfun
+
+cnoremap <C-R><C-V> <C-\>e<SID>ExpandCmdline()<CR>
+    ]])
+    -- vim.keymap.set("c", "<S-Tab>", '<C-f>dvF$"=<C-r>"<CR>pdd:q<CR>:<C-r>"')
+
+
     -- require("lspconfig").clangd.setup {
     --     on_attach = function(client, bufnr)
     --         client.server_capabilities.signatureHelpProvider = false
