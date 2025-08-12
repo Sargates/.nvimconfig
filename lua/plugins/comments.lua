@@ -15,41 +15,39 @@ return {
     --     -- event = "User AstroFile",
     -- },
     {
-        'Djancyp/better-comments.nvim',
-        config = function()
-            require('better-comment').Setup({
-                tags = {
-                    {
-                        name = "TODO",
-                        fg = "#ff8c00",
-                        bg = "none",
-                        bold = false,
-                        virtual_text = "",
-                    },
-                    {
-                        name = "!",
-                        fg = "#ff2d00",
-                        bg = "none",
-                        bold = false,
-                        virtual_text = "",
-                    },
-                    {
-                        name = "?",
-                        fg = "#3498db",
-                        bg = "none",
-                        bold = false,
-                        virtual_text = "",
-                    },
-                    {
-                        name = "//",
-                        fg = "#474747",
-                        bg = "none",
-                        bold = false,
-                        virtual_text = "",
-                    },
+        'Sargates/better-comments.nvim',
+        opts = {
+            tags = {
+                {
+                    name = "TODO",
+                    fg = "#ff8c00",
+                    bg = "none",
+                    bold = false,
+                },
+                {
+                    name = "!",
+                    fg = "#ff2d00",
+                    bg = "none",
+                    bold = false,
+                },
+                {
+                    name = "?",
+                    fg = "#3498db",
+                    bg = "none",
+                    bold = false,
+                },
+                {
+                    name = "//",
+                    fg = "#474747",
+                    bg = "none",
+                    bold = false,
+                },
+                {
+                    name = "WARN",
+                    fg = "#FFA500",
+                    bold = false,
                 }
-            })
-            -- WARNING
-        end,
+            }
+        }
     },
 }
