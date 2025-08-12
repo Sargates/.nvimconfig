@@ -14,7 +14,10 @@ return {
     {
         "rebelot/kanagawa.nvim",
         priority = 1000,
-        config = true,
+        config = function ()
+            vim.cmd.colorscheme("kanagawa")
+            vim.o.background = "dark" -- or "light" for light mode
+        end,
         opts = {
             compile = false,             -- enable compiling the colorscheme
             undercurl = true,            -- enable undercurls
