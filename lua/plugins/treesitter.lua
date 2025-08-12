@@ -22,7 +22,7 @@ return {
                     -- Instead of true it can also be a list of languages
                     additional_vim_regex_highlighting = false,
                 },
-                incremental_selection = {
+                incremental_selection = { -- https://www.youtube.com/watch?v=ff0GYrK3nT0
                     enable = true,
                     keymaps = {
                         init_selection    = "<Leader>ss", -- set to `false` to disable one of the mappings
