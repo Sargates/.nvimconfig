@@ -6,9 +6,9 @@ return {
             ui = {
                 border = "none",
                 width = 1,
-                height = 0.95,
+                height = 0.96,
                 x = 0.5,
-                y = 0.5,
+                y = 0.0,
             },
             enable_cmds = false,
             keybinds = {},
