@@ -21,13 +21,9 @@ vim.opt.expandtab = true
 
 require("config.binds")
 
--- Required for zsh treesitter support
-vim.treesitter.language.register("bash", "zsh")
-
--- require("vscode-multi-cursor").setup({
---     default_mappings = true,
---     no_selection = false,
--- })
+vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
+vim.keymap.set("n", "<space>x", ":.lua<CR>")
+vim.keymap.set("v", "<space>x", ":lua<CR>")
 
 -- LSP Diagnostics
 vim.diagnostic.config({
