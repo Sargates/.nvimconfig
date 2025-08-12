@@ -33,6 +33,10 @@
     vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
 
+-- Convert tabs to spaces
+    vim.keymap.set('n', '<leader>rt', ":set expandtab<CR>:retab<CR>", { noremap = true, silent = true })
+
+
 -- LSP Things
 
     local opts = { noremap=true, silent=true }
