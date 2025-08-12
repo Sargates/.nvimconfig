@@ -26,10 +26,6 @@ vim.g.mapleader = " "
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
-        -- Git related plugins
-        "tpope/vim-fugitive",
-        "tpope/vim-rhubarb",
-
         -- Detect tabstop and shiftwidth automatically
         "tpope/vim-sleuth",
 
