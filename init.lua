@@ -68,3 +68,31 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- require("config.better-comments")
 
+
+-- Autocmd things
+-- AI gen, don't know enough about autocmds yet
+local text_wrap_group = vim.api.nvim_create_augroup("TextWrap", { clear = true })
+local makefile_group  = vim.api.nvim_create_augroup("MakefileTabs", { clear = true })
+local zsh_group = vim.api.nvim_create_augroup("MyFiletypeLoader", { clear = true })
+
+-- Enable linewrapping in .txt files
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.txt" },
+  command = "setlocal wrap linebreak",
+  group = text_wrap_group,
+})
+
+-- Force tabs for Makefiles
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "makefile", "Makefile", "*.mk" },
+  command = "setlocal expandtab!",
+  group = makefile_group,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = zsh_group,
+  pattern = "zsh",
+  command = 'source ' .. vim.fn.stdpath('data') .. "/lazy/vim-zsh/syntax/zsh.vim",
+})
+
+
