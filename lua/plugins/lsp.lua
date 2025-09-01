@@ -121,13 +121,20 @@ return {
                 },
             })
         end
-    }
-    -- {
-    --     "SmiteshP/nvim-navbuddy",
-    --     dependencies = {
-    --         "SmiteshP/nvim-navic",
-    --         "MunifTanjim/nui.nvim"
-    --     },
-    --     opts = { lsp = { auto_attach = true } }
-    -- }
+    },
+    {
+        'nvimdev/lspsaga.nvim',
+        opts = {},
+        config = function()
+            require'lspsaga'.setup({
+                ui = {
+                    code_action = ""
+                }
+            })
+        end,
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter', -- optional
+            -- 'nvim-tree/nvim-web-devicons',     -- optional
+        }
+    },
 }
