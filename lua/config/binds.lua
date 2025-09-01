@@ -18,6 +18,10 @@
     vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
     vim.keymap.set("n", "<leader>tfb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
 
+-- Working with tabs
+    vim.keymap.set("n", "[t", "<cmd>tabprev<cr>")
+    vim.keymap.set("n", "]t", "<cmd>tabnext<cr>")
+
 
 -- Move current line up/down
     -- Normal mode mappings
