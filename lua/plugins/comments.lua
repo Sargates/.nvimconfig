@@ -37,6 +37,12 @@ return {
                     bold = false,
                 },
                 {
+                    name = "*",
+                    fg = "#FFED29",
+                    bg = "none",
+                    bold = false,
+                },
+                {
                     name = "//",
                     fg = "#474747",
                     bg = "none",
