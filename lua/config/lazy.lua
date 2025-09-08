@@ -20,13 +20,8 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
-        -- Detect tabstop and shiftwidth automatically
-        "tpope/vim-sleuth",
-
         -- import your plugins	
         { import = "plugins" },
-
-        "tpope/vim-surround",
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
