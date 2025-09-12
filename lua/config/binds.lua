@@ -60,6 +60,9 @@
     vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
     vim.keymap.set("n", "gr", function() require("telescope.builtin").lsp_references{ include_current_line = true } end, opts)
     -- vim.keymap.set("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    -- vim.lsp.buf.document_symbol()
+    vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, opts)
+    vim.keymap.set("n", "g]", vim.diagnostic.goto_next, opts)
 
 
     -- Format Selection
