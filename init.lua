@@ -85,7 +85,12 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- Force tabs for Makefiles
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = { "makefile", "Makefile", "*.mk" },
-  command = "setlocal expandtab!",
+  callback = function()
+    vim.print("Loading Makefile rules!")
+    vim.o.expandtab = false
+    vim.o.tabstop = 4
+    vim.o.shiftwidth = 4
+  end,
   group = makefile_group,
 })
 
