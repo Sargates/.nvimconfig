@@ -1,7 +1,7 @@
 return {
     -- lazy.nvim
     {
-        "sontungexpt/url-open",
+        "Sargates/url-open.nvim",
         event = "VeryLazy",
         cmd = "URLOpenUnderCursor",
         config = function()
