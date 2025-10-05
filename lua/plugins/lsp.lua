@@ -7,14 +7,14 @@ return {
             -- "hrsh7th/cmp-nvim-lsp"
         },
         config = function()
-            vim.lsp.config.bashls.setup({
+            vim.lsp.config.bashls = {
                 filetypes = { "sh", "bash", "zsh" },
                 settings = {
                     bashIde = {
                         globPattern = "**/*@(.sh|.bash|.zsh)",
                     }
                 }
-            })
+            }
             -- lspconfig.omnisharp.setup({
             --     enable_import_completion = true,
             --     enable_decompilation_support = true
