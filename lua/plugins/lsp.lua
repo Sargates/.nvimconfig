@@ -7,9 +7,7 @@ return {
             -- "hrsh7th/cmp-nvim-lsp"
         },
         config = function()
-            local lspconfig = require("lspconfig")
-
-            lspconfig.bashls.setup({
+            vim.lsp.config.bashls.setup({
                 filetypes = { "sh", "bash", "zsh" },
                 settings = {
                     bashIde = {
