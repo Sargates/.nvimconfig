@@ -20,5 +20,8 @@ return {
     {
         "AndrewRadev/undoquit.vim",
         config = function() end
+    },
+    {
+        "chrisbra/recover.vim"
     }
 }
