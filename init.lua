@@ -19,6 +19,16 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
 
+vim.opt.foldmethod = "expr"
+vim.o.foldexpr = "v:lua vim.lsp.foldexpr()"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
+-- vim.o.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
+vim.o.foldcolumn = '1'
+-- vim.o.foldenable = true
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+
 require("config.binds")
 
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
@@ -73,6 +83,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- AI gen, don't know enough about autocmds yet
 local text_wrap_group = vim.api.nvim_create_augroup("TextWrap", { clear = true })
 local makefile_group  = vim.api.nvim_create_augroup("MakefileTabs", { clear = true })
+local latex_group  = vim.api.nvim_create_augroup("LatexGroup", { clear = true })
 local zsh_group = vim.api.nvim_create_augroup("MyFiletypeLoader", { clear = true })
 
 -- Enable linewrapping in .txt files
@@ -80,6 +91,17 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = { "*.txt" },
   command = "setlocal wrap linebreak",
   group = text_wrap_group,
+})
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "tex" },
+  callback = function()
+    vim.print("Loading LaTeX rules!")
+    vim.o.expandtab = false
+    vim.o.tabstop = 4
+    vim.o.shiftwidth = 4
+  end,
+  group = latex_group
 })
 
 -- Force tabs for Makefiles
@@ -100,4 +122,13 @@ vim.api.nvim_create_autocmd("FileType", {
   command = 'source ' .. vim.fn.stdpath('data') .. "/lazy/vim-zsh/syntax/zsh.vim",
 })
 
+local rustLspGroup = vim.api.nvim_create_augroup("RustLSPGroup", { clear = true })
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.rs" },
+  callback = function()
+    vim.print("Starting Rust LSP");
+    vim.lsp.enable("rust-analyzer")
+  end,
+  group = rustLspGroup
+})
 

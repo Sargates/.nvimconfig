@@ -63,6 +63,7 @@
     -- vim.lsp.buf.document_symbol()
     vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, opts)
     vim.keymap.set("n", "g]", vim.diagnostic.goto_next, opts)
+    vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
 
 
     -- Format Selection
@@ -96,51 +97,9 @@ endfun
 
 cnoremap <C-R><C-V> <C-\>e<SID>ExpandCmdline()<CR>
     ]])
+
     -- vim.keymap.set("c", "<S-Tab>", '<C-f>dvF$"=<C-r>"<CR>pdd:q<CR>:<C-r>"')
 
-
-local on_attach = function(client, bufnr)
-    client.server_capabilities.signatureHelpProvider = true
-    --
-    -- Enable completion triggered by <c-x><c-o>
-    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 's', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'i', ',s', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',qf', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-end
-
--- shoutout jdh on youtube - https://github.com/jdah/dotfiles/blob/2b984059a68637640f03732569e24e317e7c9115/.config/nvim/lua/mylsp.lua
-require("lspconfig").clangd.setup {
-    on_attach = on_attach,
-    cmd = {
-        vim.fn.stdpath("data") .. "/mason/bin/clangd",
-        "--background-index",
-        "--pch-storage=memory",
-        "--all-scopes-completion",
-        "--pretty",
-        "--header-insertion=never",
-        "-j=4",
-        -- "--inlay-hints", -- removed. See https://github.com/clangd/clangd/discussions/986#discussioncomment-1949032
-        "--header-insertion-decorators",
-        "--function-arg-placeholders",
-        "--completion-style=detailed"
-    }
-}
-    --
     -- -- Toggle Diagnostics (inline error reporting)
     -- vim.keymap.set("n", "<leader>td", function()
     --     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
