@@ -29,6 +29,14 @@ return {
               end
             end
             require("telescope").setup({
+                pickers = {
+                    find_files = {
+                        follow = true
+                    },
+                    live_grep = {
+                        follow = true
+                    }
+                },
                 defaults = {
                     vimgrep_arguments = {
                         "rg",
@@ -73,7 +81,9 @@ return {
         config = function()
             require("telescope").load_extension("frecency")
             require("frecency.config").setup {
-                  ignore_patterns = { "*/.git", "*/.git/*", "*/.DS_Store" },
+                workspace_scan_cmd = { "rg", "-.g", "!.git", "-L", "--files" }, -- default rg command doesn't include symlinks. downside is you must have ripgrep installed; no fallback logic
+                hidden = true,
+                ignore_patterns = { "*/.git", "*/.git/*", "*/.DS_Store" },
             }
         end,
     },
