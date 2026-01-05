@@ -4,7 +4,7 @@ return {
         config = function ()
             require('nvim-treesitter.configs').setup({
                 modules = {},
-                ensure_installed = { "c", "bash", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+                ensure_installed = { "c", "bash", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "rust" },
 
                 sync_install = false,
 

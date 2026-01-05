@@ -122,13 +122,3 @@ vim.api.nvim_create_autocmd("FileType", {
   command = 'source ' .. vim.fn.stdpath('data') .. "/lazy/vim-zsh/syntax/zsh.vim",
 })
 
-local rustLspGroup = vim.api.nvim_create_augroup("RustLSPGroup", { clear = true })
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.rs" },
-  callback = function()
-    vim.print("Starting Rust LSP");
-    vim.lsp.enable("rust-analyzer")
-  end,
-  group = rustLspGroup
-})
-

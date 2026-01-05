@@ -23,28 +23,6 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', ',f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-vim.lsp.config("rust_analyzer", {
-    on_attach = on_attach,
-    settings = {
-        ["rust-analyzer"] = {
-            imports = {
-                granularity = {
-                    group = "module",
-                },
-                prefix = "self",
-            },
-            cargo = {
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true
-            },
-        }
-    }
-})
-
 return {
     {
         "neovim/nvim-lspconfig",
@@ -62,10 +40,6 @@ return {
                     }
                 }
             }
-            -- lspconfig.omnisharp.setup({
-            --     enable_import_completion = true,
-            --     enable_decompilation_support = true
-            -- })
         end
     },
 
@@ -77,6 +51,13 @@ return {
                     "github:mason-org/mason-registry",
                     "github:Crashdummyy/mason-registry",
                 },
+                ui = {
+                    icons = {
+                        package_installed = "",
+                        package_pending = "",
+                        package_uninstalled = "",
+                    },
+                }
             })
         end
     },
@@ -156,49 +137,47 @@ return {
         }
     },
 
-    {
-        "seblyng/roslyn.nvim",
-        ft = "cs",
-        -- ---@module 'roslyn.config'
-        -- ---@type RoslynNvimConfig
-        config = function()
-            require("roslyn").setup {
-                filewatching = "roslyn"
-            }
-            vim.lsp.config("roslyn", {
-                on_attach = function() end,
-                settings = {
-                    ["csharp|inlay_hints"] = {
-                        -- csharp_enable_inlay_hints_for_implicit_object_creation = true,
-                        -- csharp_enable_inlay_hints_for_implicit_variable_types = true,
-                        -- csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-                        -- csharp_enable_inlay_hints_for_types = true,
-                        -- dotnet_enable_inlay_hints_for_indexer_parameters = true,
-                        -- dotnet_enable_inlay_hints_for_literal_parameters = true,
-                        -- dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-                        -- dotnet_enable_inlay_hints_for_other_parameters = true,
-                        -- dotnet_enable_inlay_hints_for_parameters = true,
-                        -- dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
-                        -- dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
-                        -- dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
-                    },
-                    ["csharp|code_lens"] = {
-                        dotnet_enable_references_code_lens = true,
-                    },
-                    ["csharp|completion"] = {
-                        dotnet_show_completion_items_from_unimported_namespaces = true,
-                        dotnet_show_name_completion_suggestions = true,
-                    },
-                },
-            })
-        end
-    },
-
     -- {
-    --     'mrcjkb/rustaceanvim',
-    --     version = '^6', -- Recommended
-    --     lazy = false, -- This plugin is already lazy
+    --     "seblyng/roslyn.nvim",
+    --     ft = "cs",
+    --     -- ---@module 'roslyn.config'
+    --     -- ---@type RoslynNvimConfig
+    --     config = function()
+    --         require("roslyn").setup {
+    --             filewatching = "roslyn"
+    --         }
+    --         vim.lsp.config("roslyn", {
+    --             on_attach = function() end,
+    --             settings = {
+    --                 ["csharp|inlay_hints"] = {
+    --                     -- csharp_enable_inlay_hints_for_implicit_object_creation = true,
+    --                     -- csharp_enable_inlay_hints_for_implicit_variable_types = true,
+    --                     -- csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+    --                     -- csharp_enable_inlay_hints_for_types = true,
+    --                     -- dotnet_enable_inlay_hints_for_indexer_parameters = true,
+    --                     -- dotnet_enable_inlay_hints_for_literal_parameters = true,
+    --                     -- dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+    --                     -- dotnet_enable_inlay_hints_for_other_parameters = true,
+    --                     -- dotnet_enable_inlay_hints_for_parameters = true,
+    --                     -- dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+    --                     -- dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+    --                     -- dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+    --                 },
+    --                 ["csharp|code_lens"] = {
+    --                     dotnet_enable_references_code_lens = true,
+    --                 },
+    --                 ["csharp|completion"] = {
+    --                     dotnet_show_completion_items_from_unimported_namespaces = true,
+    --                     dotnet_show_name_completion_suggestions = true,
+    --                 },
+    --             },
+    --         })
+    --     end
     -- },
+    -- -- lspconfig.omnisharp.setup({
+    -- --     enable_import_completion = true,
+    -- --     enable_decompilation_support = true
+    -- -- })
 
     {
         'nvimdev/lspsaga.nvim',
