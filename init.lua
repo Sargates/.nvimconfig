@@ -6,7 +6,7 @@ vim.treesitter.language.register("bash", "zsh")
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
--- vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = "\\"
 
 require("config.lazy")
 
@@ -63,27 +63,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 
--- -- Vim-Plug
--- vim.cmd([[
--- call plug#begin()
--- " List your plugins here
--- Plug "jbgutierrez/vim-better-comments"
--- Plug "mg979/vim-visual-multi", {"branch": "master"}
--- call plug#end()
--- ]])
-
--- TODO Source better comments
--- vim.cmd("source " .. vim.fn.stdpath("config") .. "/vimscript/better-comments.vim")
--- vim.cmd("source " .. vim.fn.stdpath("config") .. "/vimscript/visual-multicursor.vim")
-
--- require("config.better-comments")
-
-
 -- Autocmd things
 -- AI gen, don't know enough about autocmds yet
 local text_wrap_group = vim.api.nvim_create_augroup("TextWrap", { clear = true })
 local makefile_group  = vim.api.nvim_create_augroup("MakefileTabs", { clear = true })
-local latex_group  = vim.api.nvim_create_augroup("LatexGroup", { clear = true })
+-- local latex_group  = vim.api.nvim_create_augroup("LatexGroup", { clear = true })
 local zsh_group = vim.api.nvim_create_augroup("MyFiletypeLoader", { clear = true })
 
 -- Enable linewrapping in .txt files
@@ -93,16 +77,16 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   group = text_wrap_group,
 })
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "tex" },
-  callback = function()
-    vim.print("Loading LaTeX rules!")
-    vim.o.expandtab = false
-    vim.o.tabstop = 4
-    vim.o.shiftwidth = 4
-  end,
-  group = latex_group
-})
+-- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+--   pattern = { "tex" },
+--   callback = function()
+--     vim.print("Loading LaTeX rules!")
+--     vim.o.expandtab = false
+--     vim.o.tabstop = 4
+--     vim.o.shiftwidth = 4
+--   end,
+--   group = latex_group
+-- })
 
 -- Force tabs for Makefiles
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
