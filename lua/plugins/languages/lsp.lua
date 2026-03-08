@@ -5,22 +5,92 @@ local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    -- Mappings.
+    local opts = { noremap=true, silent=true }
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 's', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'i', ',s', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',qf', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ',f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    -- vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    vim.keymap.set(
+        "n",
+        "gd",
+        function() require("telescope.builtin").lsp_definitions{ reuse_win = true } end,
+        { noremap=true, silent=true, desc = "Go to definition" }
+    )
+    -- this will open a new tab when going to definition. use g<Tab> to go to previous tab
+    vim.keymap.set(
+        "n",
+        "gD",
+        "<cmd>lua vim.lsp.buf.declaration()<CR>",
+        { noremap=true, silent=true, desc = "Go to declaration" }
+    )
+    -- vim.keymap.set("n", "gD", function() require("telescope.builtin").lsp_definitions{ jump_type = "vsplit" } end, opts)
+    vim.keymap.set(
+        "n",
+        "K",
+        "<cmd>lua vim.lsp.buf.hover()<CR>",
+        { noremap=true, silent=true, desc = "LSP Hover" }
+    )
+    vim.keymap.set(
+        "n",
+        "gi",
+        "<cmd>lua vim.lsp.buf.implementation()<CR>",
+        { noremap=true, silent=true, desc = "Go to implementation" }
+    )
+    -- vim.keymap.set("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+    vim.keymap.set(
+        "n",
+        "<space>wa",
+        "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
+        { noremap=true, silent=true, desc = "Add Workspace Folder" }
+    )
+    vim.keymap.set(
+        "n",
+        "<space>wr",
+        "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
+        { noremap=true, silent=true, desc = "Remove Workspace Folder" }
+    )
+    vim.keymap.set(
+        "n",
+        "<space>wl",
+        "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+        { noremap=true, silent=true, desc = "List Workspace Folders" }
+    )
+    vim.keymap.set(
+        "n",
+        "<space>D",
+        "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+        { noremap=true, silent=true, desc = "Show Type Definition" }
+    )
+    vim.keymap.set(
+        "n",
+        "<space>rn",
+        "<cmd>lua vim.lsp.buf.rename()<CR>",
+        { noremap=true, silent=true, desc = "Rename Token" }
+    )
+    vim.keymap.set(
+        "n",
+        "<space>ca",
+        "<cmd>lua vim.lsp.buf.code_action()<CR>",
+        { noremap=true, silent=true, desc = "Show Code Actions" }
+    )
+    vim.keymap.set(
+        "n",
+        "gr",
+        function() require("telescope.builtin").lsp_references{ include_current_line = true } end,
+        { noremap=true, silent=true, desc = "LSP References" }
+    )
+    -- vim.keymap.set("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    -- vim.lsp.buf.document_symbol()
+    vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, opts)
+    vim.keymap.set("n", "g]", vim.diagnostic.goto_next, opts)
+    vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
+
+
+    -- Format Selection
+    vim.keymap.set("v", "<Leader>1f", vim.lsp.buf.format, {
+        -- opts = {
+        --     -- tabSize = vim.opt.shiftwidth,
+        --     -- insertSpaces = true,
+        -- }
+    })
 end
 
 return {
