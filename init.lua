@@ -1,6 +1,3 @@
--- Required for zsh treesitter support
-vim.treesitter.language.register("bash", "zsh")
-
 
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
