@@ -18,6 +18,7 @@ return {
             callback = function()
                 require("ranger-nvim").open(true)
             end,
+            desc = "Open Ranger"
         })
     end,
     -- opts = 

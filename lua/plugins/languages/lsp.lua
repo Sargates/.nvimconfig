@@ -94,8 +94,7 @@ local on_attach = function(client, bufnr)
 end
 
 return {
-    {
-        "neovim/nvim-lspconfig",
+    { "neovim/nvim-lspconfig",
         dependencies = {
             "mason-org/mason-lspconfig.nvim",
             "SmiteshP/nvim-navbuddy"
@@ -112,9 +111,7 @@ return {
             }
         end
     },
-
-    {
-        "mason-org/mason.nvim",
+    { "mason-org/mason.nvim",
         config = function()
             require('mason').setup({
                 registries = {
@@ -131,9 +128,7 @@ return {
             })
         end
     },
-
-    {
-        "mason-org/mason-lspconfig.nvim",
+    { "mason-org/mason-lspconfig.nvim",
         dependencies = {
             "mason-org/mason.nvim",
         },
@@ -194,11 +189,13 @@ return {
                 },
             })
 
+            vim.lsp.config("texlab", {
+                on_attach = on_attach,
+                cmd = { "texlab" }
+            })
         end,
     },
-
-    {
-        "folke/lazydev.nvim",
+    { "folke/lazydev.nvim",
         ft = "lua",
         opts = {
             library = {
