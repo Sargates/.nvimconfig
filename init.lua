@@ -11,6 +11,7 @@ require("config.lazy")
 vim.wo.number = true
 
 vim.o.mouse = "v"
+vim.o.ic = true
 
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
