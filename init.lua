@@ -62,17 +62,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 
 -- Autocmd things
--- AI gen, don't know enough about autocmds yet
-local text_wrap_group = vim.api.nvim_create_augroup("TextWrap", { clear = true })
 local makefile_group  = vim.api.nvim_create_augroup("MakefileTabs", { clear = true })
 -- local latex_group  = vim.api.nvim_create_augroup("LatexGroup", { clear = true })
 local zsh_group = vim.api.nvim_create_augroup("MyFiletypeLoader", { clear = true })
+local plaintext_autocmds = vim.api.nvim_create_augroup("PlaintextAutoCMDs", { clear = true })
 
 -- Enable linewrapping in .txt files
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = { "*.txt" },
   command = "setlocal wrap linebreak",
-  group = text_wrap_group,
+  group = plaintext_autocmds,
 })
 
 -- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
@@ -100,7 +99,25 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 
 vim.api.nvim_create_autocmd("FileType", {
   group = zsh_group,
-  pattern = "zsh",
+  pattern = "*.zsh",
   command = 'source ' .. vim.fn.stdpath('data') .. "/lazy/vim-zsh/syntax/zsh.vim",
 })
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.md", "*.markdown" },
+  callback = function()
+    vim.print("Loading Markdown configuration")
+    vim.o.expandtab = true
+    vim.o.tabstop = 2
+    vim.o.shiftwidth = 2
+  end,
+  group = plaintext_autocmds,
+})
+
+
+-- Undo
+-- Add this to your init.lua
+vim.opt.undofile = true
+-- Optional: Set a specific undo directory
+vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
 
