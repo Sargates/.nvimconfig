@@ -1,5 +1,7 @@
-return {
-    {
+-- If we use $EDITOR, we don't want persistence
+local persistence = {}
+if vim.env.NO_PERSISTENCE ~= "true" then
+    persistence = {
         "folke/persistence.nvim",
         -- event = "BufReadPre", -- this will only start session saving when an actual file was opened
         config = function()
@@ -32,7 +34,13 @@ return {
                 { desc = "Kill persistence (Don't save session on quit)" }
             )
         end
-    },
+    }
+else
+    vim.notify("Persistence Not Enabled")
+end
+
+return {
+    persistence,
     {
         "AndrewRadev/undoquit.vim",
         config = function() end
