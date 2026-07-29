@@ -17,10 +17,8 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
 
-vim.opt.foldmethod = "expr"
-vim.o.foldexpr = "v:lua vim.lsp.foldexpr()"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
--- vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 -- vim.o.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
 vim.o.foldcolumn = '1'
 -- vim.o.foldenable = true
@@ -63,61 +61,47 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Autocmd things
 local makefile_group  = vim.api.nvim_create_augroup("MakefileTabs", { clear = true })
--- local latex_group  = vim.api.nvim_create_augroup("LatexGroup", { clear = true })
+local latex_group  = vim.api.nvim_create_augroup("LatexGroup", { clear = true })
 local zsh_group = vim.api.nvim_create_augroup("MyFiletypeLoader", { clear = true })
 local plaintext_autocmds = vim.api.nvim_create_augroup("PlaintextAutoCMDs", { clear = true })
 
 -- Enable linewrapping in .txt files
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.txt" },
-  command = "setlocal wrap linebreak",
-  group = plaintext_autocmds,
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = "text",
+    command = "setlocal wrap linebreak",
+    group = plaintext_autocmds,
 })
 
--- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
---   pattern = { "tex" },
---   callback = function()
---     vim.print("Loading LaTeX rules!")
---     vim.o.expandtab = false
---     vim.o.tabstop = 4
---     vim.o.shiftwidth = 4
---   end,
---   group = latex_group
--- })
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "tex" },
+    callback = function()
+        vim.print("Loading LaTeX rules!")
+        vim.o.expandtab = false
+        vim.o.tabstop = 4
+        vim.o.shiftwidth = 4
+    end,
+    group = latex_group
+})
 
 -- Force tabs for Makefiles
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "makefile", "Makefile", "*.mk" },
-  callback = function()
-    vim.print("Loading Makefile rules!")
-    vim.o.expandtab = false
-    vim.o.tabstop = 4
-    vim.o.shiftwidth = 4
-  end,
-  group = makefile_group,
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = "makefile",
+    callback = function()
+        vim.print("Loading Makefile rules!")
+        vim.o.expandtab = false
+        vim.o.tabstop = 4
+        vim.o.shiftwidth = 4
+    end,
+    group = makefile_group,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  group = zsh_group,
-  pattern = "*.zsh",
-  command = 'source ' .. vim.fn.stdpath('data') .. "/lazy/vim-zsh/syntax/zsh.vim",
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    group = zsh_group,
+    pattern = "*.zsh",
+    command = 'source ' .. vim.fn.stdpath('data') .. "/lazy/vim-zsh/syntax/zsh.vim",
 })
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.md", "*.markdown" },
-  callback = function()
-    vim.print("Loading Markdown configuration")
-    vim.o.expandtab = true
-    vim.o.tabstop = 2
-    vim.o.shiftwidth = 2
-  end,
-  group = plaintext_autocmds,
-})
-
 
 -- Undo
--- Add this to your init.lua
 vim.opt.undofile = true
--- Optional: Set a specific undo directory
 vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
 

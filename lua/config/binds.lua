@@ -8,9 +8,7 @@
     -- vim.keymap.set("n", "<space>fd", function() builtin.find_files { find_command = { "rg", "--files", "--hidden", "--iglob", "!.git" } } end, { desc = "Telescope find all files" }) -- https://github.com/creativenull/dotfiles/blob/4fc5971029604ff1c338cfe0c6c2c333d9ee3ec4/.config/nvim-nightly/lua/creativenull/plugins/config/telescope.lua#L17
     vim.keymap.set("n", "<leader>fg", function ()
         require("telescope.builtin").live_grep {
-            additional_args = {
-                "-i"
-            },
+            additional_args = { "-i" },
             glob_pattern = "!.git"
         }
     end, { desc = "Telescope live grep" })
@@ -61,8 +59,18 @@
     vim.keymap.set("n", "gr", function() require("telescope.builtin").lsp_references{ include_current_line = true } end, opts)
     -- vim.keymap.set("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     -- vim.lsp.buf.document_symbol()
-    vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, opts)
-    vim.keymap.set("n", "g]", vim.diagnostic.goto_next, opts)
+    -- Jump to next diagnostic
+    -- vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, opts)
+    vim.keymap.set('n', 'g[', function()
+        vim.diagnostic.jump({ count = -1, float = true })
+    end, { desc = 'Previous diagnostic' })
+
+    -- vim.keymap.set("n", "g]", vim.diagnostic.goto_next, opts)
+    -- Jump to previous diagnostic
+    vim.keymap.set('n', 'g]', function()
+        vim.diagnostic.jump({ count = 1, float = true })
+    end, { desc = 'Next diagnostic' })
+
     vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
 
 
