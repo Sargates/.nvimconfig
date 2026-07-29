@@ -1,6 +1,5 @@
 local opts = { noremap=true, silent=true }
 local on_attach = function(client, bufnr)
-    -- vim.print("Attaching Rust!");
     client.server_capabilities.signatureHelpProvider = false
 
     -- Enable completion triggered by <c-x><c-o>
@@ -26,44 +25,28 @@ local on_attach = function(client, bufnr)
     vim.opt.textwidth = 0
 end
 
-local rust_lsp_group = vim.api.nvim_create_augroup("Rust LSP Group", { clear = true })
+local lua_ls_group = vim.api.nvim_create_augroup("Lua LSP Group", { clear = true })
 vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "rust",
+    pattern = "lua",
     callback = function()
-        vim.print("Enabling Rust LSP");
+        vim.print("Enabling lua_ls");
         vim.lsp.enable("rust-analyzer")
     end,
-    group = rust_lsp_group
+    group = lua_ls_group
 })
 
-vim.lsp.config("rust_analyzer", {
+vim.lsp.config("luals", {
     on_attach = on_attach,
+    cmd = { "lua-language-server" },
     settings = {
-        ["rust-analyzer"] = {
-            imports = {
-                granularity = {
-                    group = "module",
-                },
-                prefix = "self",
-            },
-            cargo = {
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true
-            },
-            -- inlayHints = { locationLinks = false },
+        lua = {
             diagnostics = {
-                enable = true,
-                experimental = {
-                    enable = true,
-                },
-                -- warningsAsHint = { "unused" }, // doesn't work
-            },
+                unusedLocalExclude = ".*"
+            }
         }
     }
 })
 
 return {}
+
+

@@ -41,7 +41,7 @@ return {
                     require("nvim-treesitter.parsers").zsh = {
                         install_info = {
                             url = "https://github.com/georgeharker/tree-sitter-zsh",
-                            revision = "HEAD",
+                            revision = "7a593401efb5418ffdedbe3c0e4c61c6d240166d",
                             generate_from_json = false, -- only needed if repo does not contain `src/grammar.json` either
                             queries = 'nvim-queries', -- also install queries from given directory
                         },
@@ -84,6 +84,7 @@ return {
             -- vim.g.no_go_maps = true
         end,
         config = function()
+
             require("nvim-treesitter-textobjects").setup {
                 select = {
                     -- Automatically jump forward to textobj, similar to targets.vim
@@ -112,24 +113,44 @@ return {
                     include_surrounding_whitespace = false,
                 },
             }
+
+            local TO_select = require("nvim-treesitter-textobjects.select")
+            local TO_swap = require("nvim-treesitter-textobjects.swap")
+            local TO_move = require("nvim-treesitter-textobjects.move")
             -- keymaps
             -- You can use the capture groups defined in `textobjects.scm`
-            vim.keymap.set({ "x", "o" }, "af", function()
-                require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
-            end)
-            vim.keymap.set({ "x", "o" }, "if", function()
-                require "nvim-treesitter-textobjects.select".select_textobject("@function.inner", "textobjects")
-            end)
-            vim.keymap.set({ "x", "o" }, "ac", function()
-                require "nvim-treesitter-textobjects.select".select_textobject("@class.outer", "textobjects")
-            end)
-            vim.keymap.set({ "x", "o" }, "ic", function()
-                require "nvim-treesitter-textobjects.select".select_textobject("@class.inner", "textobjects")
-            end)
+            vim.keymap.set( { "x", "o" },
+                            "af",
+                            function() TO_select.select_textobject("@function.outer", "textobjects") end,
+                            { noremap=true, silent=true, desc = "Around Function" })
+            vim.keymap.set( { "x", "o" },
+                            "if",
+                            function() TO_select.select_textobject("@function.inner", "textobjects") end,
+                            { noremap=true, silent=true, desc = "Inner function" })
+            vim.keymap.set( { "x", "o" },
+                            "ac",
+                            function() TO_select.select_textobject("@class.outer", "textobjects") end,
+                            { noremap=true, silent=true, desc = "Around Class" })
+            vim.keymap.set( { "x", "o" },
+                            "ic",
+                            function() TO_select.select_textobject("@class.inner", "textobjects") end,
+                            { noremap=true, silent=true, desc = "Inner Class" })
             -- You can also use captures from other query groups like `locals.scm`
-            vim.keymap.set({ "x", "o" }, "as", function()
-                require "nvim-treesitter-textobjects.select".select_textobject("@local.scope", "locals")
-            end)
+            vim.keymap.set( { "x", "o" },
+                            "as",
+                            function() TO_select.select_textobject("@local.scope", "locals") end,
+                            { noremap=true, silent=true, desc = "Scope" })
+
+            -- Swap Parameters
+            vim.keymap.set( "n",
+                            "<leader>a",
+                            function() TO_swap.swap_next("@parameter.inner") end,
+                            { noremap=true, silent=true, desc = "Swap with Next Parameter" })
+            vim.keymap.set( "n",
+                            "<leader>A",
+                            function() TO_swap.swap_previous("@parameter.inner") end,
+                            { noremap=true, silent=true, desc = "Swap with Previous Parameter" })
+
         end
     }
 }

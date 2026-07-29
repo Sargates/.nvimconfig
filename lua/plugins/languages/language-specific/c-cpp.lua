@@ -1,6 +1,5 @@
 local opts = { noremap=true, silent=true }
 local on_attach = function(client, bufnr)
-    -- vim.print("Attaching Rust!");
     client.server_capabilities.signatureHelpProvider = false
 
     -- Enable completion triggered by <c-x><c-o>
@@ -14,9 +13,6 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 's', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'i', ',s', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', ',wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', ',wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', ',wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', ',D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', ',rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', ',qf', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
@@ -26,44 +22,34 @@ local on_attach = function(client, bufnr)
     vim.opt.textwidth = 0
 end
 
-local rust_lsp_group = vim.api.nvim_create_augroup("Rust LSP Group", { clear = true })
+local clangd_lsp_group = vim.api.nvim_create_augroup("Clangd LSP Group", { clear = true })
 vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "rust",
+    pattern = { "c", "cpp" },
     callback = function()
-        vim.print("Enabling Rust LSP");
-        vim.lsp.enable("rust-analyzer")
+        vim.print("Starting Clangd");
+        vim.lsp.enable("clangd")
     end,
-    group = rust_lsp_group
+    group = clangd_lsp_group
 })
 
-vim.lsp.config("rust_analyzer", {
+-- jdh on youtube - https://github.com/jdah/dotfiles/blob/2b984059a68637640f03732569e24e317e7c9115/.config/nvim/lua/mylsp.lua
+vim.lsp.config("clangd", {
     on_attach = on_attach,
-    settings = {
-        ["rust-analyzer"] = {
-            imports = {
-                granularity = {
-                    group = "module",
-                },
-                prefix = "self",
-            },
-            cargo = {
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true
-            },
-            -- inlayHints = { locationLinks = false },
-            diagnostics = {
-                enable = true,
-                experimental = {
-                    enable = true,
-                },
-                -- warningsAsHint = { "unused" }, // doesn't work
-            },
-        }
+    cmd = {
+        "clangd",
+        "--background-index",
+        "--pch-storage=memory", -- This setting *will* hog a shit ton of memory if your PCH file is huge
+        "--all-scopes-completion",
+        "--pretty",
+        "--header-insertion=never",
+        "-j=4",
+        -- "--inlay-hints", -- removed. See https://github.com/clangd/clangd/discussions/986#discussioncomment-1949032
+        "--header-insertion-decorators",
+        -- "--function-arg-placeholders",
+        "--completion-style=detailed"
     }
 })
 
 return {}
+
+

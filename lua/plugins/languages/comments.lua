@@ -29,6 +29,11 @@ return {
                     { name = "WARN",
                       fg = "#FFA500" }
                 },
+                queries = {
+                    ["rust"] = "(line_comment) @all",
+                    ["cmake"] = "(line_comment) @all",
+                    ["default"] = "(comment) @all"
+                }
             }
         end,
     },

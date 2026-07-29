@@ -5,7 +5,7 @@ local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    local opts = { noremap=true, silent=true }
+    -- local opts = { noremap=true, silent=true }
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     -- vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
     vim.keymap.set(
@@ -148,24 +148,6 @@ return {
                 automatic_enable = true
             }
 
-            -- shoutout jdh on youtube - https://github.com/jdah/dotfiles/blob/2b984059a68637640f03732569e24e317e7c9115/.config/nvim/lua/mylsp.lua
-            vim.lsp.config("clangd", {
-                on_attach = on_attach,
-                cmd = {
-                    "clangd",
-                    "--background-index",
-                    "--pch-storage=memory",
-                    "--all-scopes-completion",
-                    "--pretty",
-                    "--header-insertion=never",
-                    "-j=4",
-                    -- "--inlay-hints", -- removed. See https://github.com/clangd/clangd/discussions/986#discussioncomment-1949032
-                    "--header-insertion-decorators",
-                    -- "--function-arg-placeholders",
-                    "--completion-style=detailed"
-                }
-            })
-
             vim.lsp.config("basedpyright", {
                 on_attach = on_attach,
                 settings = {
@@ -177,17 +159,12 @@ return {
                 }
             })
 
-            vim.lsp.config("luals", {
-                on_attach = on_attach,
-                cmd = { "lua-language-server" },
-            })
-
-            vim.lsp.config('zls', {
-                on_attach = on_attach,
-                cmd = {
-                    'zls'
-                },
-            })
+            -- vim.lsp.config('zls', {
+            --     on_attach = on_attach,
+            --     cmd = {
+            --         'zls'
+            --     },
+            -- })
 
             vim.lsp.config("texlab", {
                 on_attach = on_attach,

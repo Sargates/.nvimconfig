@@ -1,6 +1,6 @@
 local opts = { noremap=true, silent=true }
 local on_attach = function(client, bufnr)
-    -- vim.print("Attaching Rust!");
+    vim.print("Attaching Biome!");
     client.server_capabilities.signatureHelpProvider = false
 
     -- Enable completion triggered by <c-x><c-o>
@@ -26,44 +26,27 @@ local on_attach = function(client, bufnr)
     vim.opt.textwidth = 0
 end
 
-local rust_lsp_group = vim.api.nvim_create_augroup("Rust LSP Group", { clear = true })
+-- local language_server=
+
+local biome_lsp_group = vim.api.nvim_create_augroup("Biome LSP Group", { clear = true })
 vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "rust",
+    pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
     callback = function()
-        vim.print("Enabling Rust LSP");
-        vim.lsp.enable("rust-analyzer")
+        vim.print("Enabling JS/TS LSP");
+        vim.lsp.enable("typescript-language-server")
     end,
-    group = rust_lsp_group
+    group = biome_lsp_group,
 })
 
-vim.lsp.config("rust_analyzer", {
+-- local util = require("lspconfig.util")
+vim.lsp.config("typescript-language-server", {
     on_attach = on_attach,
-    settings = {
-        ["rust-analyzer"] = {
-            imports = {
-                granularity = {
-                    group = "module",
-                },
-                prefix = "self",
-            },
-            cargo = {
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true
-            },
-            -- inlayHints = { locationLinks = false },
-            diagnostics = {
-                enable = true,
-                experimental = {
-                    enable = true,
-                },
-                -- warningsAsHint = { "unused" }, // doesn't work
-            },
-        }
-    }
+    -- cmd = { "biome", "lsp-proxy" },
+    -- root_dir = function(fname)
+    --     return util.root_pattern("biome.json", "biome.jsonc")(fname)
+    --         or vim.fs.dirname(vim.fs.find('package.json', { path = fname, upward = true })[1])
+    --         or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
+    -- end,
 })
 
 return {}
